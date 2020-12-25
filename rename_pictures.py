@@ -5,19 +5,22 @@
 
 import sys
 import os
-import dlib
-import numpy as np
-from cv2 import cv2
-from skimage.transform import resize
 
-directoryname = sys.argv[1]
-x = 0
+def main():
 
-listing = os.listdir(directoryname)
+    """Select file and rename element in the file"""
 
-for dir_file in listing:
-    x = x + 1
-    old_file = os.path.join(directoryname, dir_file)
-    new_file = os.path.join(directoryname, str(x)+'.jpg')
-    os.rename(old_file,new_file)
-    print(new_file)
+    directory_name = sys.argv[1]
+    num_img = 0
+
+    listing = os.listdir(directory_name)
+
+    for dir_file in listing:
+        num_img = num_img + 1
+        old_file = os.path.join(directory_name, dir_file)
+        new_file = os.path.join(directory_name, str(num_img)+'.jpg')
+        os.rename(old_file, new_file)
+        print(new_file)
+
+if __name__ == "__main__":
+    main()

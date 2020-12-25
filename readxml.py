@@ -1,22 +1,25 @@
 #!/usr/bin/python3
 
+"""Read XML file from API"""
+
+#from xml.etree import ElementTree
 import requests
-import time
-from xml.etree import ElementTree
-from lxml import html,etree
+from lxml import etree
 
+def main():
 
-header = {'keyapp': 'FvChCBnSetVgTKk324rO', 'cmd': 'getNextStopsRealtime', 'stopArea': '7'}
-response = requests.get("http://apixha.ixxi.net/APIX", params=header)
+    """Call and parse XML file from API"""
 
-tree = etree.fromstring(response.content)
-retour = tree.xpath("/nextStopsRealtimeResultat/currentTime")
-lignes = tree.xpath("//lineId")
-prochArret = tree.xpath("//nextStopTime")
-for r in retour:
-    print("Time :", r.text)
-for i, r in enumerate(lignes):
-    print("Ligne :", r.text)
-    
+    header = {'keyapp': 'FvChCBnSetVgTKk324rO', 'cmd': 'getNextStopsRealtime', 'stopArea': '7'}
+    response = requests.get("http://apixha.ixxi.net/APIX", params=header)
 
+    tree = etree.fromstring(response.content)
+    times = tree.xpath("/nextStopsRealtimeResultat/currentTime")
+    lignes = tree.xpath("//lineId")
+    for time in times:
+        print("Time :", time.text)
+    for ligne in lignes:
+        print("Ligne :", ligne.text)
 
+if __name__ == "__main__":
+    main()
