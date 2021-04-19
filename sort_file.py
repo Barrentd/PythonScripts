@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 """Select file and sort files"""
@@ -14,22 +14,21 @@ def main():
 
     directory_name = sys.argv[1]
 
-    vid=['.mov','.mp4','.avi']
-    img=['.jpeg','.jpg','.png']
+    vid = ['.mov','.mp4','.avi']
+    img = ['.jpeg','.jpg','.png']
+    dirs = ['images', 'videos']
 
-    if not os.path.exists('images'):
-        os.makedirs('images')
-
-    if not os.path.exists('slides'):
-        os.makedirs('videos')
+    for dr in dirs:
+        if not os.path.exists(dr):
+            os.makedirs(dr)
 
     listfile = glob.glob(directory_name+"/*")
 
-    for file in listfile:
-        if os.path.splitext(file)[1] in vid:
-            shutil.move(file, 'slides')
+    for file, dr in listfile:
         if os.path.splitext(file)[1] in img:
-            shutil.move(file, 'images')
+            shutil.move(file, dirs[0])
+        if os.path.splitext(file)[1] in vid:
+            shutil.move(file, dirs[1])
 
 if __name__ == "__main__":
     main()
